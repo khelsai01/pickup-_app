@@ -19,7 +19,7 @@ export default function Home() {
           className="w-full h-screen object-cover sm:min-h-screen"
         />
 
-        <div className="absolute top-[18%] md:top-[18%] lg:top-[10%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-4xl sm:text-5xl lg:text-3xl text-white">
+        <div className="absolute top-[18%] md:top-[18%] lg:top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-4xl sm:text-5xl lg:text-3xl text-white">
           <h3>
             Pickup Line <br/><br/><span>Generator</span>
           </h3>
