@@ -16,6 +16,7 @@ const config: Config = {
       fontFamily: {
         grandHotel: ['"Grand Hotel"', 'cursive'],
       },
+      
     },
   },
   plugins: [],

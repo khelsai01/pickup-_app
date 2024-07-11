@@ -19,15 +19,15 @@ export default function Home() {
           className="w-full h-screen object-cover sm:min-h-screen"
         />
 
-        <div className="absolute top-[18%] md:top-[18%] lg:top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-4xl sm:text-5xl lg:text-3xl text-white">
+        <div className="absolute top-[18%] md:top-[18%] lg:top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-4xl sm:text-5xl lg:text-3xl text-white hover:scale-110 duration-500">
           <h3>
             Pickup Line <br/><br/><span>Generator</span>
           </h3>
         </div>
-        <div className="absolute top-[60%]  left-1/2 transform -translate-x-1/2 -translate-y-[60%] bg-red-400 p-2 rounded-md px-2 sm:px-4 lg:px-3 text-xl sm:text-4xl lg:text-3xl text-white "><div className="flex gap-2 mx-auto">
-          <FaHeart />
+        <div className="absolute top-[60%]  left-1/2 transform -translate-x-1/2 -translate-y-[60%] bg-red-400 p-2 rounded-md px-2 sm:px-4 lg:px-3 text-xl sm:text-4xl lg:text-3xl text-white hover:scale-110 ease-in-out duration-500 group"><div className="flex gap-2 mx-auto">
+          <FaHeart className="group-hover:text-red-600" />
           <Link href={'/login'}>Generate one for me</Link>
-          <FaHeart />
+          <FaHeart className="group-hover:text-red-600" />
         </div>
         </div>
       </main>
