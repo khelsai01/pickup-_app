@@ -1,7 +1,37 @@
-import React from "react";
+'use client'
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
 const Login = () => {
+
+  const [user, setUser] = useState<any>(null);
+  
+  const supabase = createClientComponentClient();
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: {user},
+      } = await supabase.auth.getUser();
+      setUser(user);
+      
+    };
+    getUser();
+  });
+
+  const handleSignInWithGoogle = async () => {
+    const res = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+        redirectTo: `http://localhost:3000/pickupline`,
+      },
+    });
+  };
+
   return (
     <div className="bg-white">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
@@ -13,7 +43,7 @@ const Login = () => {
           <h2 className="text-sm sm:text-lg font-semibold">Pickup line generator</h2>
           <p className="text-[10px] sm:text-[14px] text-gray-400 mt-4">Generate pickup line for your crush now!</p>
         </div>
-          <div className="rounded-lg border-2 p-2 sm:px-4 flex justify-center items-center mx-auto sm:gap-2">
+          <div  className="rounded-lg border-2 p-2 sm:px-4 flex justify-center items-center mx-auto sm:gap-2">
             <img src="https://static-00.iconduck.com/assets.00/google-icon-2048x2048-pks9lbdv.png" alt="google" className=" w-8 h-8 sm:w-10 sm:h-10 " />
           <h2 className="text-sm sm:text-md font-medium sm:font-semibold">Sign up with google</h2>
         </div>
