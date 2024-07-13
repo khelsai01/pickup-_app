@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { FaHeart } from "react-icons/fa";
 
@@ -8,7 +9,6 @@ interface Message {
   direction: "outgoing" | "incoming";
   sender: "user" | "ChatGPT";
 }
-const API_KEY = "sk-proj-xYQFtw2Y3mwol3RkC5wKT3BlbkFJaAJ9wdijiUGwAYAHYhB5";
 
 const PickupLine: React.FC = () => {
   const [pickupline, setPickupline] = useState<Message[]>([
@@ -18,9 +18,9 @@ const PickupLine: React.FC = () => {
       sender: "ChatGPT",
     },
   ]);
-
+  const router = useRouter();
   const [inputPickup, setInputPickup] = useState<string>("");
-  const [isTyping, setIsTyping] = useState<boolean>(false);
+  const [generating, setGenerating] = useState<boolean>(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputPickup(e.target.value);
@@ -37,7 +37,6 @@ const PickupLine: React.FC = () => {
     const newMessages = [...pickupline, newPickup];
     setPickupline(newMessages);
     setInputPickup("");
-    setIsTyping(true);
 
     await processMessageToChatGPT(newMessages);
   };
@@ -61,7 +60,7 @@ const PickupLine: React.FC = () => {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${API_KEY}`,
+            Authorization: `Bearer ${process.env.YOUR_OPENAI_API_KEY}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(apiRequestBody),
@@ -81,10 +80,16 @@ const PickupLine: React.FC = () => {
     } catch (error) {
       console.error("Error processing message to ChatGPT:", error);
     } finally {
-      setIsTyping(false);
     }
   }
+  const handleGenetate = () => {
+    setGenerating(true);
+    router.push("/pickupline/pickup");
+  };
 
+  const signOut = () => {
+    router.push("/")
+  }
   return (
     <div
       className="relative min-w-full min-h-screen bg-cover bg-center font-grandHotel"
@@ -92,11 +97,11 @@ const PickupLine: React.FC = () => {
     >
       <div className="absolute inset-0 bg-white opacity-90"></div>
       <div className="relative z-10 flex flex-col items-center">
-        <div className="flex w-[95%] sm:w-[90%] lg:w-[80%] md:justify-between items-center justify-around pt-10 px-2 ">
-          <h1 className="text-[#FF2157] font-semibold sm:font-medium text-xl sm:text-3xl md:text-5xl ">
+        <div className="flex w-[95%] sm:w-[90%]md:w-[50%] md:justify-between  items-center justify-around pt-10 px-2 ">
+          <h1 className="text-[#FF2157] font-semibold sm:font-bold text-xl sm:text-4xl md:text-5xl sm:ml-28 md:ml-44 lg:ml-80 ">
             Pickup line Generator
           </h1>
-          <button className="text-[#B5002C] bg-[#efbbc8] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 ">
+          <button onClick={signOut} className="text-[#B5002C] bg-[#efbbc8] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 ">
             SignOut
           </button>
         </div>
@@ -120,9 +125,12 @@ const PickupLine: React.FC = () => {
                 placeholder="e.g., Funny"
                 className="p-2 px-6 w-[100%] border-2 rounded-lg text-red-500"
               />
-              <button className="flex justify-center items-center w-[100%] mt-6 bg-[#FF2157] p-2 rounded-full text-xl md:text-3xl text-white   group gap-1 text-center hover:scale-105 ease-in-out duration-1000 ">
+              <button
+                className="flex justify-center items-center w-[100%] mt-6 bg-[#FF2157] p-2 rounded-full text-xl md:text-3xl text-white   group gap-1 text-center hover:scale-105 ease-in-out duration-1000 "
+                onClick={handleGenetate}
+              >
                 <FaHeart className="group-hover:text-red-300 group-hover:scale-150 mt-2 ease-in-out duration-1000" />
-                <span >Generate one for me</span>
+                <span>Generate one for me</span>
                 <FaHeart className="group-hover:text-red-300 mt-2 group-hover:scale-150  ease-in-out duration-1000" />
               </button>
             </form>

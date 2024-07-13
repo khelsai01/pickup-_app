@@ -15,13 +15,13 @@ const pickupLines: PickupLine[] = [
   {
     id: 1,
     title: "pickupline1",
-    details: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam, amet!",
+    details: "Are you a parking ticket? Because you've got FINE written all over you!"
   },
   {
     id: 2,
     title: "pickupline2",
-    details: "xhtyiewoLorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam, amet!",
-  },
+    details: "Is your name Google? Because you've got everything I've been searching for."
+  }
 ];
 
 const PickupLineComponent: React.FC = () => {
@@ -41,6 +41,10 @@ const PickupLineComponent: React.FC = () => {
     router.push('/pickupline');
   };
 
+  const signOut = () => {
+    router.push("/")
+  }
+
   return (
     <div
       className="relative min-w-full min-h-screen bg-cover bg-center font-grandHotel"
@@ -49,10 +53,10 @@ const PickupLineComponent: React.FC = () => {
       <div className="absolute inset-0 bg-white opacity-90"></div>
       <div className="relative z-10 flex flex-col items-center">
         <div className="flex w-[95%] sm:w-[90%] lg:w-[80%] md:justify-between items-center justify-around pt-10 px-2 ">
-          <h1 className="text-[#ff4271] font-semibold sm:font-medium text-lg sm:text-3xl md:text-5xl ">
+          <h1 className="text-[#ff4271] font-semibold sm:font-bold  text-xl sm:text-4xl md:text-5xl sm:ml-28 md:ml-44 lg:ml-64 ">
             Pickup line Generator
           </h1>
-          <button className="text-[#B5002C] bg-[#eeced6] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 ">
+          <button onClick={signOut} className="text-[#B5002C] bg-[#eeced6] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 ">
             SignOut
           </button>
         </div>
@@ -67,7 +71,7 @@ const PickupLineComponent: React.FC = () => {
             {pickupLines.map((line) => (
               <div
                 key={line.id}
-                className="border-2 border-red-300 my-2 p-6 rounded-lg relative transform transition-transform duration-300 hover:scale-105"
+                className="border-2 border-red-300 my-2 p-6 rounded-lg relative transform transition-transform duration-1000 hover:scale-105"
               >
                 <div className="flex justify-between text-red-500 my-2 ">
                   <h2 className="sm:text-lg">{line.title}</h2>

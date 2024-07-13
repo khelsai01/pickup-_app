@@ -18,7 +18,7 @@ import {
   
   export const supabaseRouteHandler = (cookies: any) => {
     const supabase = createRouteHandlerClient({cookies});
-    console.log("supabase", supabase);
+    // console.log("supabase", supabase);
     return supabase;
   };
   
