@@ -19,7 +19,7 @@ export default function Home() {
           className="w-full h-screen object-cover sm:min-h-screen"
         />
 
-        <div className="absolute top-[18%] md:top-[18%] lg:top-[15%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-3xl sm:text-4xl lg:text-3xl text-white hover:scale-110 duration-500">
+        <div className="absolute top-[18%] md:top-[18%] lg:top-[10%] left-1/2 transform -translate-x-1/2 -translate-y-1/3 text-3xl sm:text-4xl lg:text-3xl text-white hover:scale-110 duration-500">
           <h3>
             Pickup Line <br />
             <br />

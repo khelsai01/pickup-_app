@@ -10,5 +10,6 @@ export async function GET(request: NextRequest) {
     const supabase = supabaseRouteHandler(cookies);
     await supabase.auth.exchangeCodeForSession(code);
   }
+  console.log(requestUrl.origin)
   return NextResponse.redirect(requestUrl.origin+'/pickupline');
 }
