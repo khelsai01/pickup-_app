@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { CgCopy } from "react-icons/cg";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface PickupLine {
   id: number;
@@ -26,6 +27,8 @@ const pickupLines: PickupLine[] = [
 
 const PickupLineComponent: React.FC = () => {
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [userEmail, setUserEmail] = useState<string | undefined>("");
+  const supabase = createClientComponentClient();
   const router = useRouter();
 
   const handleCopy = (id: number, text: string) => {
@@ -41,8 +44,36 @@ const PickupLineComponent: React.FC = () => {
     router.push('/pickupline');
   };
 
-  const signOut = () => {
-    router.push("/")
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUserEmail(user?.user_metadata.name);
+    };
+
+    fetchUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === "SIGNED_IN" && session?.user) {
+          setUserEmail(session.user.user_metadata.name);
+        } else if (event === "SIGNED_OUT") {
+          setUserEmail("");
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [router,supabase]);
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut();
+
+    router.refresh();
+    router.push("/");
   }
 
   return (
@@ -56,9 +87,20 @@ const PickupLineComponent: React.FC = () => {
           <h1 className="text-[#ff4271] font-semibold sm:font-bold  text-xl sm:text-4xl md:text-5xl sm:ml-28 md:ml-44 lg:ml-64 ">
             Pickup line Generator
           </h1>
-          <button onClick={signOut} className="text-[#B5002C] bg-[#eeced6] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 ">
-            SignOut
-          </button>
+          <div>
+            
+            <button
+              onClick={signOut}
+              className="text-[#B5002C] bg-[#efbbc8] p-2 md:p-3 rounded-full text-lg sm:text-xl md:text-3xl ml-10 md:ml-2 mt-2"
+            >
+              SignOut
+            </button>
+            {userEmail && (
+              <p className="text-[#B5002C]">
+                {userEmail}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="w-full sm:w-[60%] flex flex-col justify-start lg:justify-center lg:items-center md:m-auto p-4 mt-6">

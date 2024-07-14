@@ -1,9 +1,20 @@
-import { updateSession } from '@/app/utils/middleware'
-import { type NextRequest } from 'next/server'
 
 
-export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+import {NextResponse} from "next/server";
+import type {NextRequest} from "next/server";
+
+import {createMiddlewareClient} from "@supabase/auth-helpers-nextjs";
+
+// This function can be marked `async` if using `await` inside
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const pathname = req.nextUrl.pathname;
+
+  const supabase = createMiddlewareClient({req, res});
+  const data = await supabase.auth.getSession();
+
+  console.log("res", res);
+  return res;
 }
 
 export const config = {
