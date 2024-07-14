@@ -11,6 +11,10 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap"
           rel="stylesheet"
         />
+        <link
+          rel="icon"
+          href="https://w7.pngwing.com/pngs/820/953/png-transparent-love-hearts-love-hearts-red-heart-love-heart-computer-icons-thumbnail.png"
+        />
       </head>
       <main className="font-grandHotel">
         <img
